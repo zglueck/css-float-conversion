@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>CSS Color Conversion Test</title>
+        <style>
+            input {
+                width: 40px;
+            }
+            canvas {
+                width: 500px;
+                height: 40px;
+                padding-left: 0;
+                padding-right: 0;
+                margin-left: auto;
+                margin-right: auto;
+                display: block;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Float To Integer Color Conversion Test</h1>
+        <hr>
+        <p>Inputs on the left side should be integer percent values that will be specified using the rgba(r,b,c,a) CSS fill style in accordance with CSS Color 3. The integer converted output from the canvas will be provided on the right side.</p>
+        <table>
+            <tr>
+                <td>
+                    input
+                </td>
+                <td>
+                    canvas
+                </td>
+                <td>
+                    floor
+                </td>
+                <td>
+                    round
+                </td>
+                <td>
+                    ceil
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <form>
+                        <input id="redPercent" type="text" value="25">
+                    </form>
+                </td>
+                <td id="redInteger">
+
+                </td>
+                <td id="redInteger1">
+
+                </td>
+                <td id="redInteger2">
+
+                </td>
+                <td id="redInteger3">
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <form>
+                        <input id="greenPercent" type="text" value="7">
+                    </form>
+                </td>
+                <td id="greenInteger">
+
+                </td>
+                <td id="greenInteger1">
+
+                </td>
+                <td id="greenInteger2">
+
+                </td>
+                <td id="greenInteger3">
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <form>
+                        <input id="bluePercent" type="text" value="75">
+                    </form>
+                </td>
+                <td id="blueInteger">
+
+                </td>
+                <td id="blueInteger1">
+
+                </td>
+                <td id="blueInteger2">
+
+                </td>
+                <td id="blueInteger3">
+
+                </td>    
+            </tr>
+            <tr>
+                <td>
+                    <form>
+                        <input id="alphaPercent" type="text" value="1">
+                    </form>
+                </td>
+                <td id="alphaInteger">
+
+                </td>
+            </tr>
+        </table>
+        
+        <div>
+            <canvas id="demoCanvas"></canvas>
+        </div>
+        <script>
+            
+            var redInput = document.getElementById("redPercent");
+            var redOutput = document.getElementById("redInteger");
+            var redOutput1 = document.getElementById("redInteger1");
+            var redOutput2 = document.getElementById("redInteger2");
+            var redOutput3 = document.getElementById("redInteger3");
+            var greenInput = document.getElementById("greenPercent");
+            var greenOutput = document.getElementById("greenInteger");
+            var greenOutput1 = document.getElementById("greenInteger1");
+            var greenOutput2 = document.getElementById("greenInteger2");
+            var greenOutput3 = document.getElementById("greenInteger3");
+            var blueInput = document.getElementById("bluePercent");
+            var blueOutput = document.getElementById("blueInteger");
+            var blueOutput1 = document.getElementById("blueInteger1");
+            var blueOutput2 = document.getElementById("blueInteger2");
+            var blueOutput3 = document.getElementById("blueInteger3");
+            var alphaInput = document.getElementById("alphaPercent");
+            var alphaOutput = document.getElementById("alphaInteger");
+            var canvas = document.getElementById("demoCanvas");
+            var ctx = canvas.getContext("2d");
+
+            var updateCanvas = function(event) {
+                var red = Number(redInput.value);
+                var green = Number(greenInput.value);
+                var blue = Number(blueInput.value);
+                var alpha = Number(alphaInput.value);
+                var rgbVal = "rgba(" + red
+                    + "%, " + green
+                    + "%, " + blue
+                    + "%, " + alpha
+                    + ")";
+                ctx.fillStyle = rgbVal;
+                ctx.fillRect(0,0,500,40);
+
+                var pixel = ctx.getImageData(5, 5, 1, 1);
+                var c = red / 100;
+                redOutput.innerText = pixel.data[0];
+                redOutput1.innerText = Math.floor(255 * c);
+                redOutput2.innerText = Math.round(255 * c);
+                redOutput3.innerText = Math.ceil(255 * c);
+                c = green / 100;
+                greenOutput.innerText = pixel.data[1];
+                greenOutput1.innerText = Math.floor(255 * c);
+                greenOutput2.innerText = Math.round(255 * c);
+                greenOutput3.innerText = Math.ceil(255 * c);
+                c = blue / 100;
+                blueOutput.innerText = pixel.data[2];
+                blueOutput1.innerText = Math.floor(255 * c);
+                blueOutput2.innerText = Math.round(255 * c);
+                blueOutput3.innerText = Math.ceil(255 * c);
+                alphaOutput.innerText = pixel.data[3];
+            };
+
+            redInput.addEventListener("input", updateCanvas);
+            greenInput.addEventListener("input", updateCanvas);
+            blueInput.addEventListener("input", updateCanvas);
+            alphaInput.addEventListener("input", updateCanvas);
+
+            updateCanvas();
+        </script>
+    </body>
+</html>
